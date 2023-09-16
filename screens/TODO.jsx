@@ -4,12 +4,14 @@ import { Swipeable } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome"
 
-function TODO(){
-  const [allTasks, setAllTasks] = useState([]);
+function TODO({route}){
+  const [tasksWithList, setTasksWithList] = useState([]);
+  const [tasksWithoutList, setTasksWithoutList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAddTaskModalVisible, setAddTaskModalVisible] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const listid=route.params.listId;
 
   const openAddTaskModal = () => {
     setAddTaskModalVisible(true);
@@ -26,14 +28,15 @@ function TODO(){
 
   useEffect(() => {
     saveData();
-  }, [allTasks, completedTasks]);
+  }, [tasksWithList, completedTasks]);
 
   const loadData = async () => {
     try {
       const allTasksData = await AsyncStorage.getItem("allTasks");
       const completedTasks=await AsyncStorage.getItem("completedTasks");
       if (allTasksData) {
-        setAllTasks(JSON.parse(allTasksData));
+        setTasksWithoutList(JSON.parse(allTasksData).filter((item) => item.listId !== listid));
+        setTasksWithList(JSON.parse(allTasksData).filter((item) => item.listId === listid));
       }
       if (completedTasks) {
         setCompletedTasks(JSON.parse(completedTasks));
@@ -49,8 +52,9 @@ function TODO(){
       id: Date.now().toString(),
       title: newTaskTitle,
       completed: false,
+      listId:listid,
     };
-    setAllTasks([...allTasks, newTask]);
+    setTasksWithList([...tasksWithList, newTask]);
     saveData();
     closeAddTaskModal();
   };
@@ -62,10 +66,10 @@ function TODO(){
 
   const markAsCompleted = async(itemToComplete) => {
     if (itemToComplete) {
-      const updatedAllTasks = allTasks.filter((item) => item.id !== itemToComplete.id);
+      const updatedAllTasks = tasksWithList.filter((item) => item.id !== itemToComplete.id);
       let taskToUpdate = {...itemToComplete,completed:true};
       const updatedCompletedTasks = [...completedTasks, taskToUpdate];
-      setAllTasks(updatedAllTasks);
+      setTasksWithList(updatedAllTasks);
       setCompletedTasks(updatedCompletedTasks);
       setSelectedItem(null);
     }
@@ -73,7 +77,8 @@ function TODO(){
 
   const saveData = async () => {
     try {
-      await AsyncStorage.setItem("allTasks", JSON.stringify(allTasks));
+      const combinedArray=[...tasksWithoutList,...tasksWithList]
+      await AsyncStorage.setItem("allTasks", JSON.stringify(combinedArray));
       await AsyncStorage.setItem("completedTasks", JSON.stringify(completedTasks));
     } catch (error) {
       console.error("Error saving data: ", error);
@@ -81,8 +86,8 @@ function TODO(){
   };
 
   const deleteItem = (item) => {
-    const updatedAllTasks = allTasks.filter((i) => i.id !== item.id);
-    setAllTasks(updatedAllTasks);
+    const updatedAllTasks = tasksWithList.filter((i) => i.id !== item.id);
+    setTasksWithList(updatedAllTasks);
   };
 
   const renderRightActions = (item) => {
@@ -152,7 +157,7 @@ function TODO(){
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={allTasks}
+        data={tasksWithList}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
