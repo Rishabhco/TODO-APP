@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {Home,TODO,All,Completed,Scheduled} from './screens/index';
+import {Home,TODO,All,Completed} from './screens/index';
 
 const Stack = createStackNavigator();
 
