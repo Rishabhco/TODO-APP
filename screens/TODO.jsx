@@ -61,7 +61,7 @@ function TODO({route}){
 
   const handleRadioPress = (item) => {
     setSelectedItem(item);
-    setTimeout(() => { markAsCompleted(item);}, 2000);
+    setTimeout(() => { markAsCompleted(item);}, 1000);
   };
 
   const markAsCompleted = async(itemToComplete) => {

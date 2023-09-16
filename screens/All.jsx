@@ -45,7 +45,7 @@ function All() {
             backgroundColor: item.completed ? "blue" : "red",
           }}
         />
-        <Text style={{ fontSize: 20 }}>{item.title}</Text>
+        <Text style={{ fontSize: 20, color:"blue"}}>{item.title}</Text>
       </View>
     );
   };

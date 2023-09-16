@@ -15,8 +15,8 @@ function Completed(){
     },[tasks]);
 
     const loadData=async()=>{
-        const getTasks=await AsyncStorage.getItem("completedTasks");
-        setTasks(JSON.parse(getTasks));
+      const getTasks=await AsyncStorage.getItem("completedTasks");
+      setTasks(JSON.parse(getTasks));
     }
 
     const saveData=async()=>{
