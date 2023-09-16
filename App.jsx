@@ -13,7 +13,6 @@ function App(){
         <Stack.Screen name="TODO" component={TODO}/>
         <Stack.Screen name="All" component={All} options={{title:'All Tasks'}}/>
         <Stack.Screen name="Completed" component={Completed} options={{title:'Completed Tasks'}}/>
-        <Stack.Screen name="Scheduled" component={Scheduled} options={{title:'Scheduled Tasks'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
