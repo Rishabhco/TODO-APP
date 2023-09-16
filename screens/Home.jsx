@@ -9,30 +9,12 @@ function Home({ navigation }) {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Section 1: Four Boxes */}
+      {/* Section 1: Two Boxes */}
       <View style={styles.boxContainer}>
-        <TouchableOpacity
-          style={[styles.box, { backgroundColor: "lightsalmon" }]}
-          onPress={() => navigation.navigate("Today")}
-        >
-          <Text style={styles.boxText}>Today</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.box, { backgroundColor: "lightgreen" }]}
-          onPress={() => navigation.navigate("Scheduled")}
-        >
-          <Text style={styles.boxText}>Scheduled</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.box, { backgroundColor: "lightblue" }]}
-          onPress={() => navigation.navigate("All")}
-        >
+        <TouchableOpacity style={[styles.box, { backgroundColor: "lightblue" }]} onPress={() => navigation.navigate("All")}>
           <Text style={styles.boxText}>All</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.box, { backgroundColor: "lightpink" }]}
-          onPress={() => navigation.navigate("Completed")}
-        >
+        <TouchableOpacity style={[styles.box, { backgroundColor: "lightpink" }]} onPress={() => navigation.navigate("Completed")}>
           <Text style={styles.boxText}>Completed</Text>
         </TouchableOpacity>
       </View>
@@ -43,7 +25,7 @@ function Home({ navigation }) {
           <TouchableOpacity
             key={item.id}
             style={styles.listItem}
-            onPress={() => navigation.navigate("All", { listId: item.id })}
+            onPress={() => navigation.navigate("TODO", { listId: item.id })}
           >
             <Text style={styles.listItemText}>{item.title}</Text>
             <Icon name="angle-right" size={20} color="#333"/>

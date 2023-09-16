@@ -1,15 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {Home,TODO,All,Completed,Scheduled} from './screens/index';
-
 
 const Stack = createStackNavigator();
 
