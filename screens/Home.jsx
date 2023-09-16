@@ -1,13 +1,59 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import React,{useEffect, useState} from "react";
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView,Modal,TextInput } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Home({ navigation }) {
-  const listsData = [
-    { id: "1", title: "My Tasks" },
-  ];
+
+  const [isAddListModalVisible, setAddListModalVisible] = useState(false);
+  const [newListTitle, setNewListTitle] = useState("");
+  const [lists,setLists]=useState([{id: Date.now().toString(),title:"My Tasks",}]);
+
+  useEffect(()=>{
+    loadData();
+  },[]);
+
+  useEffect(()=>{
+    saveData();
+  },[lists]);
+
+  const loadData=async()=>{
+    const getLists=await AsyncStorage.getItem("lists");
+    if(getLists){
+      setLists(JSON.parse(getLists));
+    }
+  };
+
+  const saveData=async()=>{
+    try{
+      await AsyncStorage.setItem("lists",JSON.stringify(lists));
+    }catch(error){
+      console.log('Error saving data', error);
+    }
+  }
+
+  const openAddListModal = () => {
+    setAddListModalVisible(true);
+  };
+
+  const closeAddListModal = () => {
+    setNewListTitle(""); 
+    setAddListModalVisible(false);
+  };
+
+  const createList = () => {
+    if (newListTitle.trim() === "") return;
+    const newList = {
+      id: Date.now().toString(),
+      title: newListTitle,
+    };
+    setLists([...lists, newList]);
+    saveData();
+    closeAddListModal();
+  };
 
   return (
+    <View style={{flex:1}}>
     <ScrollView style={styles.container}>
       {/* Section 1: Two Boxes */}
       <View style={styles.boxContainer}>
@@ -21,7 +67,7 @@ function Home({ navigation }) {
       {/* Section 2: My Lists */}
       <View style={styles.listsContainer}>
         <Text style={styles.listsHeading}>My Lists</Text>
-        {listsData.map((item) => (
+        {lists.map((item) => (
           <TouchableOpacity
             key={item.id}
             style={styles.listItem}
@@ -33,6 +79,80 @@ function Home({ navigation }) {
         ))}
       </View>
     </ScrollView>
+    <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 10,
+          borderWidth: 1,
+          borderColor: "#ddd",
+          borderRadius: 5,
+          margin: 5,
+        }}
+      >
+        <TouchableOpacity onPress={openAddListModal} style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon name="plus" size={24} color="blue" />
+          <Text style={{ fontSize: 20, marginLeft: 10 }}>Add List</Text>
+        </TouchableOpacity>
+      </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isAddListModalVisible}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.7)",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#fff",
+              padding: 20,
+              borderRadius: 10,
+              width: 300,
+            }}
+          >
+            <Text style={{ fontSize: 24, marginBottom: 10 }}>Add List</Text>
+            <TextInput
+              placeholder="List Title"
+              value={newListTitle}
+              onChangeText={(text) => setNewListTitle(text)}
+              style={{
+                borderWidth: 1,
+                borderColor: "#ddd",
+                borderRadius: 5,
+                padding: 10,
+                marginBottom: 10,
+              }}
+            />
+            <TouchableOpacity
+              onPress={createList}
+              style={{
+                backgroundColor: "blue",
+                padding: 10,
+                borderRadius: 5,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 18 }}>Add</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={closeAddListModal}
+              style={{
+                marginTop: 10,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "red", fontSize: 16 }}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }
 
