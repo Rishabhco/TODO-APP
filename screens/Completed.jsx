@@ -47,7 +47,7 @@ function Completed(){
               width: 75,
             }}
           >
-            <Text style={{ fontSize: 16 }}>Delete</Text>
+            <Text style={{ fontSize: 16,color:"white" }}>Delete</Text>
           </TouchableOpacity>
         );
       };
@@ -72,36 +72,27 @@ function Completed(){
                   height: 20,
                   borderRadius: 10,
                   borderWidth: 2,
-                  borderColor: "blue",
-                  backgroundColor: "blue",
+                  borderColor: "#007AFF",
+                  backgroundColor: "#007AFF",
                   justifyContent: "center",
                   alignItems: "center",
                   marginRight: 10,
                 }}
               >
-                {/* {selectedItem?.id === item.id && (
-                  <View
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: 6,
-                      backgroundColor: "blue",
-                    }}
-                  />
-                )} */}
               </TouchableOpacity>
-              <Text style={{ fontSize: 20 }}>{item.title}</Text>
+              <Text style={{ fontSize: 20,color:"#242424" }}>{item.title}</Text>
             </View>
           </Swipeable>
         );
       };
 
     return(
-            <FlatList
-                data={tasks}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-            />
+      <View style={{flex:1,backgroundColor:"white"}}>
+        <FlatList
+          data={tasks} renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
     )
 }
 

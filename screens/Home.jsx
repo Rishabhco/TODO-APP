@@ -53,18 +53,16 @@ function Home({ navigation }) {
   };
 
   return (
-    <View style={{flex:1}}>
+    <View style={{flex:1,backgroundColor:"white"}}>
     <ScrollView style={styles.container}>
-      {/* Section 1: Two Boxes */}
       <View style={styles.boxContainer}>
-        <TouchableOpacity style={[styles.box, { backgroundColor: "lightblue" }]} onPress={() => navigation.navigate("All")}>
+        <TouchableOpacity style={[styles.box, { backgroundColor: "#007AFF"}]} onPress={() => navigation.navigate("All")}>
           <Text style={styles.boxText}>All</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.box, { backgroundColor: "lightpink" }]} onPress={() => navigation.navigate("Completed")}>
+        <TouchableOpacity style={[styles.box, { backgroundColor: "#007AFF"}]} onPress={() => navigation.navigate("Completed")}>
           <Text style={styles.boxText}>Completed</Text>
         </TouchableOpacity>
       </View>
-      {/* Section 2: My Lists */}
       <View style={styles.listsContainer}>
         <Text style={styles.listsHeading}>My Lists</Text>
         {lists.map((item) => (
@@ -91,8 +89,8 @@ function Home({ navigation }) {
         }}
       >
         <TouchableOpacity onPress={openAddListModal} style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon name="plus" size={24} color="blue" />
-          <Text style={{ fontSize: 20, marginLeft: 10 }}>Add List</Text>
+          <Icon name="plus" size={24} color="#007AFF" />
+          <Text style={{ fontSize: 20, marginLeft: 10,color:"#007AFF" }}>Add List</Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -116,9 +114,10 @@ function Home({ navigation }) {
               width: 300,
             }}
           >
-            <Text style={{ fontSize: 24, marginBottom: 10 }}>Add List</Text>
+            <Text style={{ fontSize: 24, marginBottom: 10,color:"#242424" }}>Add List</Text>
             <TextInput
               placeholder="List Title"
+              placeholderTextColor={"#242424"}
               value={newListTitle}
               onChangeText={(text) => setNewListTitle(text)}
               style={{
@@ -127,12 +126,13 @@ function Home({ navigation }) {
                 borderRadius: 5,
                 padding: 10,
                 marginBottom: 10,
+                color:"#242424"
               }}
             />
             <TouchableOpacity
               onPress={createList}
               style={{
-                backgroundColor: "blue",
+                backgroundColor: "#007AFF",
                 padding: 10,
                 borderRadius: 5,
                 alignItems: "center",
@@ -172,10 +172,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
+    borderRadius:8,
   },
   boxText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
+    color:"white"
   },
   listsContainer: {
     marginHorizontal: 20,
@@ -184,6 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    color:"#242424"
   },
   listItem: {
     flexDirection: "row",
@@ -197,6 +200,7 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 18,
+    color:"#242424"
   },
 });
 

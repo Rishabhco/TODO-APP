@@ -42,20 +42,22 @@ function All() {
             height: 12,
             borderRadius: 6,
             marginHorizontal:5,
-            backgroundColor: item.completed ? "blue" : "red",
+            backgroundColor: item.completed ? "#007AFF" : "red",
           }}
         />
-        <Text style={{ fontSize: 20, color:"blue"}}>{item.title}</Text>
+        <Text style={{ fontSize: 20, color:"#242424"}}>{item.title}</Text>
       </View>
     );
   };
 
   return (
-    <FlatList
-      data={tasks}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-    />
+    <View style={{flex:1,backgroundColor:"white"}}>
+      <FlatList
+        data={tasks}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 }
 

@@ -83,7 +83,7 @@ function TODO({route}){
     } catch (error) {
       console.error("Error saving data: ", error);
     }
-  };
+  }
 
   const deleteItem = (item) => {
     const updatedAllTasks = tasksWithList.filter((i) => i.id !== item.id);
@@ -104,8 +104,8 @@ function TODO({route}){
           alignItems: "center",
           width: 75,
         }}
-      >
-        <Text style={{ fontSize: 16 }}>Delete</Text>
+        >
+        <Text style={{ fontSize: 16 ,color:"white"}}>Delete</Text>
       </TouchableOpacity>
     );
   };
@@ -131,7 +131,7 @@ function TODO({route}){
               height: 20,
               borderRadius: 10,
               borderWidth: 2,
-              borderColor: "blue",
+              borderColor: "#007AFF",
               justifyContent: "center",
               alignItems: "center",
               marginRight: 10,
@@ -143,19 +143,19 @@ function TODO({route}){
                   width: 12,
                   height: 12,
                   borderRadius: 6,
-                  backgroundColor: "blue",
+                  backgroundColor: "#007AFF",
                 }}
               />
             )}
           </TouchableOpacity>
-          <Text style={{ fontSize: 20 }}>{item.title}</Text>
+          <Text style={{ fontSize: 20,color:"#242424" }}>{item.title}</Text>
         </View>
       </Swipeable>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,backgroundColor:"white" }}>
       <FlatList
         data={tasksWithList}
         renderItem={renderItem}
@@ -173,8 +173,8 @@ function TODO({route}){
         }}
       >
         <TouchableOpacity onPress={openAddTaskModal} style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon name="plus" size={24} color="blue" />
-          <Text style={{ fontSize: 20, marginLeft: 10 }}>Add Task</Text>
+          <Icon name="plus" size={24} color="#007AFF" />
+          <Text style={{ fontSize: 20, marginLeft: 10,color:"#007AFF" }}>Add Task</Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -198,9 +198,10 @@ function TODO({route}){
               width: 300,
             }}
           >
-            <Text style={{ fontSize: 24, marginBottom: 10 }}>Add Task</Text>
+            <Text style={{ fontSize: 24, marginBottom: 10,color:"#242424" }}>Add Task</Text>
             <TextInput
               placeholder="Task Title"
+              placeholderTextColor={"#242424"}
               value={newTaskTitle}
               onChangeText={(text) => setNewTaskTitle(text)}
               style={{
@@ -209,12 +210,13 @@ function TODO({route}){
                 borderRadius: 5,
                 padding: 10,
                 marginBottom: 10,
+                color:"#242424"
               }}
             />
             <TouchableOpacity
               onPress={createTask}
               style={{
-                backgroundColor: "blue",
+                backgroundColor: "#007AFF",
                 padding: 10,
                 borderRadius: 5,
                 alignItems: "center",
